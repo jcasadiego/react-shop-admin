@@ -1,21 +1,37 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { useAuth } from '@hooks/useAuth';
+import { useRouter } from 'next/router';
 
 export default function LoginPage() {
+  const router = useRouter();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const auth = useAuth();
+  const [ errorLogin, setErrorLogin ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
 
   const submitHandler = (event) => {
     event.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    setErrorLogin(null);
+    setLoading(true);
+
 
     console.log(email, password);
     auth.signIn(email, password)
       .then(() => {
-        console.log('login success');
+        router.push('/dashboard');
+      })
+      .catch( (error) => {
+        if(error.response?.status === 401){
+          setErrorLogin('Usuario o Password Incorrectos');
+        } else if(error.request) {
+          setErrorLogin('Tenemos un problema, intente de nuevo');
+        } else {
+          setErrorLogin('Algo salió mal')
+        };
       });
   };
 
@@ -61,7 +77,17 @@ export default function LoginPage() {
                 />
               </div>
             </div>
-
+            {loading && (
+              <span className="flex absolute h-4 w-4 top-0 right-0 -mt-1 -mr-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-300 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-4 w-4 bg-indigo-400"></span>
+              </span>
+            )}
+            {errorLogin && (
+              <div className="p-3 mb-3 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                <span className="font-medium">Error!</span> {errorLogin}
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
