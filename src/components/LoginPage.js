@@ -18,8 +18,6 @@ export default function LoginPage() {
     setErrorLogin(null);
     setLoading(true);
 
-
-    console.log(email, password);
     auth.signIn(email, password)
       .then(() => {
         router.push('/dashboard');
@@ -85,7 +83,7 @@ export default function LoginPage() {
             )}
             {errorLogin && (
               <div className="p-3 mb-3 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                <span className="font-medium">Error!</span> {errorLogin}
+                <span className="font-medium">Datos inválidos!!</span> {errorLogin}
               </div>
             )}
             <div className="flex items-center justify-between">
