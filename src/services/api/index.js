@@ -8,14 +8,14 @@ const endPoints = {
         refreshToken: `${API}/api/${VERSION}/auth/refresh-token`,
     },
     products: {
-        getProducts: `${API}/api/${VERSION}/products`,
+        getProducts: (limit, offset) => `${API}/api/${VERSION}/products?limit=${limit}&offset=${offset}`,
         postProduct: `${API}/api/${VERSION}/products`,
         getProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
         putProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
         deleteProduct: (id) => `${API}/api/${VERSION}/products/${id}`,
     },
     users: {
-        getUsers: `${API}/api/${VERSION}/users`,
+        getUsers: (limit, offset) => `${API}/api/${VERSION}/users?limit=${limit}&offset=${offset}`,
         postUsers: `${API}/api/${VERSION}/users`,
         getUser: (id) => `${API}/api/${VERSION}/users/${id}`,
         putUser: (id) => `${API}/api/${VERSION}/users/${id}`,
@@ -23,7 +23,7 @@ const endPoints = {
         postUser: `${API}/api/${VERSION}/users/is-available`,
     },
     categories: {
-        getCategories: `${API}/api/${VERSION}/categories`,
+        getCategories: (limit, offset) => `${API}/api/${VERSION}/categories?limit=${limit}&offset=${offset}`,
         postCategories: `${API}/api/${VERSION}/categories`,
         getCategory: (id) => `${API}/api/${VERSION}/categories/${id}`,
         putCategory: (id) => `${API}/api/${VERSION}/categories/${id}`,
